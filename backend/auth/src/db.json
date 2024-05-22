@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "foo@bar.com",
+      "password": "976f0a9ec7619bfc47da78fbb049fc6e285498a295c92893d0b7a3dac4fb46f9775066e4931bcaafc274ecbdf91e92630e47dc32c0c728b85b5c01cffe275fe8.f463868b997430ed"
+    },
+    {
+      "id": 2,
+      "email": "john@doe.com",
+      "password": "f478f3eb419e333cbf922d42d489688124dcb5ab430222c2b106cd9c7801974759f1592b14d809776daad4aa2f396de94a35ae22a47a45bab55544dbd90b704a.aa47be2aa9e58661"
+    },
+    {
+      "id": 3,
+      "email": "uncle@bob.com",
+      "password": "a6debeaf9d68b5f5f71365a51758d28b462249fc5b4b135d17310e7a1791199d0dd7eb38f97eacbfb3962c67c030f6d6471dcba1d00e6c4866b88e8c2fa99863.d8fd36144bd78058"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "**/*.spec.ts",
+    "jest-setup-files-after-env.ts",
+    "jest.config.ts",
+    "**/__mocks__"
+  ]
+}
