@@ -4,7 +4,7 @@ import { validateEnv } from "./validate-env.js";
 import App from "./layout/app.js";
 import router from "./router/index.js";
 
-import productStore from "./storage/store.js";
+import productStore from "./storage/product-store.js";
 import userStore from "./storage/user.js";
 
 import alertsService from "./services/alerts/index.js";

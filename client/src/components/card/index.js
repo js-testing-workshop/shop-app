@@ -62,7 +62,7 @@ export default class Card extends BaseComponent {
   addEventListeners() {
     const { addToCartBtn } = this.subElements;
 
-    addToCartBtn.addEventListener("pointerdown", () => {
+    addToCartBtn.addEventListener("click", () => {
       if (this.data.inStore) {
         this.dispatchEvent("remove-from-cart", this.data);
         this.removeActive();

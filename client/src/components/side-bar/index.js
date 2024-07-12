@@ -101,7 +101,7 @@ export default class SideBar extends BaseComponent {
   }
 
   addEventListeners() {
-    this.subElements.clearFilters.addEventListener("pointerdown", () => {
+    this.subElements.clearFilters.addEventListener("click", () => {
       for (const component of Object.values(this.components)) {
         component.reset();
       }
