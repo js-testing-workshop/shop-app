@@ -131,8 +131,8 @@ export default class DoubleSlider extends BaseComponent {
     this.subElements.thumbLeft.style.left = left;
     this.subElements.thumbRight.style.right = right;
 
-    this.subElements.from.innerText = this.formatValue(from);
-    this.subElements.to.innerText = this.formatValue(to);
+    this.subElements.from.innerHTML = this.formatValue(from);
+    this.subElements.to.innerHTML = this.formatValue(to);
   }
 
   onThumbPointerDown(event) {

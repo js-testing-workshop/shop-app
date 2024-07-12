@@ -129,7 +129,7 @@ export default class Page extends BaseComponent {
         const { cartCounter } = this.subElements;
 
         cartCounter.classList.remove("hidden");
-        cartCounter.innerText = productsCount;
+        cartCounter.innerHTML = productsCount;
       },
       { signal: this.abortController.signal },
     );
@@ -142,9 +142,9 @@ export default class Page extends BaseComponent {
 
         if (productsCount === 0) {
           cartCounter.classList.add("hidden");
-          cartCounter.innerText = 0;
+          cartCounter.innerHTML = 0;
         } else {
-          cartCounter.innerText = productsCount;
+          cartCounter.innerHTML = productsCount;
         }
       },
       { signal: this.abortController.signal },
