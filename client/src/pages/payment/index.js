@@ -1,5 +1,5 @@
 import BaseComponent from "../../components/base-component.js";
-import productStore from "../../storage/store.js";
+import productStore from "../../storage/product-store.js";
 import { loadStripe } from "@stripe/stripe-js";
 import { getClientSecret } from "../../api/payments.js";
 

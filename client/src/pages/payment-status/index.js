@@ -1,5 +1,5 @@
 import BaseComponent from "../../components/base-component.js";
-import productStore from "../../storage/store.js";
+import productStore from "../../storage/product-store.js";
 import { getPaymentStatus } from "../../api/payments.js";
 
 export default class PaymentStatusPage extends BaseComponent {

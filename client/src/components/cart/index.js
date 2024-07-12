@@ -1,5 +1,5 @@
 import BaseComponent from "../base-component.js";
-import productStore from "../../storage/store.js";
+import productStore from "../../storage/product-store.js";
 
 import "./cart-style.css";
 
