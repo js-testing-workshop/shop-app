@@ -12,4 +12,4 @@ Add particular item(s) to cart (Any video card x2, any gaming keyboard, Logitech
 
 ## Team-4
 
-Create a particular product (laptop, price 80k) and check its presence on a home page afterward
+Initialize Cart page with two laptops and one video card, check increasing, decreasing products counter and clearing products cart
