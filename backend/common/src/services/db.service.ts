@@ -1,5 +1,4 @@
 import fs from "node:fs/promises";
-import * as path from "path";
 
 const getId = () => {
   return Math.random().toString(16).slice(2);

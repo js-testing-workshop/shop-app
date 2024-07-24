@@ -44,19 +44,8 @@ describe("Filter products", () => {
   });
 
   beforeEach(() => {
-    fetchMock.mockResponses(
-      [JSON.stringify(categories), { status: 200 }],
-      [JSON.stringify(brands), { status: 200 }],
-      [
-        JSON.stringify(products),
-        {
-          status: 200,
-          headers: {
-            "X-Total-Count": "100",
-          },
-        },
-      ],
-    );
+    // TIP: mock requests to categories, brands inluding X-Total-Count header
+    fetchMock.mockResponses();
 
     page = new HomePage();
 
@@ -72,8 +61,7 @@ describe("Filter products", () => {
   });
 
   it("should be rendered correctly", () => {
-    expect(page.element).toBeInTheDocument();
-    expect(page.element).toBeVisible();
+    // TODO: put your awesome test here
   });
 
   it("should apply category filter", () => {

@@ -24,7 +24,7 @@ describe("Create product", () => {
   let page;
 
   beforeEach(() => {
-    // TODO: mock appropriate responses
+    // TODO: mock appropriate requsts: categories and brands
     fetchMock.mockResponses();
 
     page = new CreateProductPage();
@@ -40,22 +40,31 @@ describe("Create product", () => {
   });
 
   it("should be rendered correctly", () => {
-    expect(page.element).toBeInTheDocument();
-    expect(page.element).toBeVisible();
-  });
 
-  it("should render page title", () => {
-    // TODO: put your awesome test here
   });
 
   it("should correctly create product", async () => {
-    // TODO: put your awesome test here
-    // NOTE: you can remove "required" attribute from image input
+    // Fill in all the form fields except the image
+
+    // Hack for an image cration
+    Object.defineProperty(image, "files", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: [file],
+    });
+
+    image.removeAttribute("required");
+
+    // Submit the form
+
+    // Hack: flush all promises
+    await new Promise(process.nextTick);
+
+    // Check results
   });
 
-  it("should have ability to be destroyed", () => {
-    // TODO: put your awesome test here
+  it("should not crate a product when the data is invalid", () => {
+    // TODO: ...
   });
-
-  // TODO: add your test cases here...
 });

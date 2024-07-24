@@ -33,6 +33,7 @@ export default class Cart extends BaseComponent {
   get template() {
     const total = this.productStore.getTotal();
 
+    // TODO: hide orderBtn for none logedin user
     return `
       <div class="cart-container">
         <ul class="cart-list" data-element='list'></ul>
