@@ -1,0 +1,8 @@
+.alert {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1050; /* Ensure it appears above other content */
+  padding: 1rem;
+  box-sizing: border-box;
+}
