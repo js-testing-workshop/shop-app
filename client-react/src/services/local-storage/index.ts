@@ -1,24 +1,32 @@
 export default class LocalStorageService {
   #storage;
+  namespace;
 
-  constructor(storage: Storage) {
+  constructor(storage: Storage, namespace: string) {
     this.#storage = storage;
+    this.namespace = namespace;
   }
 
-  add(key: string, value: unknown) {
-    return this.#storage.setItem(key, JSON.stringify(value));
+  // TODO: remove
+  // add(key: string, value: unknown) {
+  //   return this.#storage.setItem(`${this.namespace}_${key}`, JSON.stringify(value));
+  // }
+
+  set<T = unknown>(key: string, value: T) {
+    return this.#storage.setItem(`${this.namespace}_${key}`, JSON.stringify(value));
   }
 
-  get(key: string): unknown {
-    return JSON.parse(this.#storage.getItem(key) ?? "null");
+  get<T = unknown>(key: string): T | null {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return JSON.parse(this.#storage.getItem(`${this.namespace}_${key}`) ?? "null");
   }
 
   remove(key: string) {
-    this.#storage.removeItem(key);
+    this.#storage.removeItem(`${this.namespace}_${key}`);
   }
 
   getAll() {
-    const keys = Object.keys(this.#storage);
+    const keys = Object.keys(this.#storage).filter((key) => key.startsWith(`${this.namespace}_`));
   
     if (keys.length === 0) return null;
   

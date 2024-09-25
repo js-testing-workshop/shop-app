@@ -1,8 +1,8 @@
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
-import { alertTypes } from '../../models/alertTypes';
+import { AlertType } from '../../types/alert';
 
 interface Alert {
-  type: alertTypes;
+  type: AlertType;
   message: string;
 }
 

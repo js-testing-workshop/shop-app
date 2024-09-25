@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './card-style.css';
-import { Product } from '../../models/Product';
+import { Product } from '../../types/product';
 
 interface CardProps {
   data: Product;
@@ -9,21 +9,17 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ data, onAddToCart, onRemoveFromCart }) => {
-  const [inStore, setInStore] = useState(data.inStore);
-
   const handleClick = () => {
-    if (inStore) {
+    if (data.count) {
       onRemoveFromCart(data.id);
-      setInStore(false);
     } else {
       onAddToCart(data.id);
-      setInStore(true);
     }
   };
 
   const footer = () => {
-    const labelValue = inStore ? 'Remove from cart' : 'Add to cart';
-    const classValue = inStore ? 'active' : '';
+    const labelValue = data.count ? 'Remove from cart' : 'Add to cart';
+    const classValue = data.count ? 'active' : '';
 
     return (
       <button

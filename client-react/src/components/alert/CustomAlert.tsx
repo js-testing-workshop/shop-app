@@ -1,9 +1,9 @@
 import React from 'react';
 import './customAlert.css';
-import { alertTypes } from '../../models/alertTypes';
+import { AlertType } from '../../types/alert.ts';
 
 interface CustomAlertProps {
-  type: alertTypes;
+  type: AlertType;
   message: string;
   onClose: () => void;
 }
