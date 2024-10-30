@@ -6,7 +6,7 @@ export default class SearchFilter extends Handler {
     const { q } = query;
 
     if (q) {
-      const result = data.filter((item) => item.title.includes(q));
+      const result = data.filter((item) => item.title.toLowerCase().includes(q.toLowerCase()));
 
       return this.next(result, query);
     }

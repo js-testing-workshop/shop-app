@@ -1,20 +1,44 @@
-import { Product } from "../models/Product.ts";
-import { httpRequest } from "../request/index.ts";
-import { uploadToImgur } from "./imgur-img-upload.ts";
+import { httpRequest } from '../request/index.ts';
+import { uploadToImgur } from './imgur-img-upload.ts';
+import { Product, ProductsQueryParams } from '../types/product.ts';
 
 const getBaseUrl = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
-  return new URL("shop/", BACKEND_URL);
+  return new URL('shop/', BACKEND_URL);
 };
 
-export const getProducts = async (search: URLSearchParams): Promise<{products: Product[], total: number}> => {
-  const url = new URL("products", getBaseUrl());
+export const getProducts = async (params: ProductsQueryParams): Promise<{ products: Product[], total: number }> => {
+  const url = new URL('products', getBaseUrl());
 
-  url.search = search.toString();
+  const urlSearchParams: Record<string, string> = {
+    _page: params.page.toString(),
+    _limit: params.limit.toString(),
+  };
+
+  if (params.search) {
+    urlSearchParams.q = params.search;
+  }
+
+  if (params.filters.length) {
+    params.filters.forEach((filter) => {
+      if (!filter.value) {
+        return;
+      }
+      if (filter.type === 'range') {
+        urlSearchParams[`${filter.name}_gte`] = filter.value.from.toString();
+        urlSearchParams[`${filter.name}_lte`] = filter.value.to.toString();
+      }
+      if (filter.type === 'checkboxes') {
+        urlSearchParams[filter.name] = filter.value.join('%2C');
+      }
+    })
+  }
+
+  url.search = (new URLSearchParams(urlSearchParams)).toString();
 
   const { data, response } = await httpRequest.request(url);
-  const total = parseInt(response.headers.get("X-Total-Count") ?? "0", 10);
+  const total = parseInt(response.headers.get('X-Total-Count') ?? '0', 10);
 
   return {
     products: data as Product[],
@@ -23,7 +47,7 @@ export const getProducts = async (search: URLSearchParams): Promise<{products: P
 };
 
 export const createProduct = async (body = {}, options = {}) => {
-  const url = new URL("products", getBaseUrl());
+  const url = new URL('products', getBaseUrl());
   const obj = Object.fromEntries(Object.entries(body));
 
   if ((obj.image as File).size > 0) {
@@ -33,13 +57,13 @@ export const createProduct = async (body = {}, options = {}) => {
     obj.images = [link];
   }
 
-  // NOTE: cleare image filed because backend expects imageS field
+  // NOTE: clear image filed because backend expects imageS field
   delete obj.image;
 
   const result = await httpRequest.post(url, {
-    credentials: "include",
+    credentials: 'include',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(obj),
     ...options,
@@ -49,15 +73,15 @@ export const createProduct = async (body = {}, options = {}) => {
 };
 
 export const getCategories = async () => {
-  const url = new URL("categories", getBaseUrl());
-  const result = await httpRequest.get(url);
+  const url = new URL('categories', getBaseUrl());
+  const result = await httpRequest.get(url) as string[];
 
   return result;
 };
 
 export const getBrands = async () => {
-  const url = new URL("brands", getBaseUrl());
-  const result = await httpRequest.get(url);
+  const url = new URL('brands', getBaseUrl());
+  const result = await httpRequest.get(url) as string[];
 
   return result;
 };

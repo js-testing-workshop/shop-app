@@ -1,40 +1,50 @@
-import { Product } from "../models/Product.ts";
-import { httpRequest } from "../request/index.ts";
+import { httpRequest } from '../request/index.ts';
+import { Product } from '../types/product.ts';
+import { Order } from '../types/orders.ts';
 
 const getBaseUrl = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
-  return new URL("payments/", BACKEND_URL);
+  return new URL('payments/', BACKEND_URL);
 };
 
-export const getClientSecret = async (data: Product[] = []) => {
+interface GetClientSecretResponse {
+  clientSecret: string;
+}
+
+export const getClientSecret = async (data: Product[] = []): Promise<GetClientSecretResponse> => {
   const result = await httpRequest.post(getBaseUrl(), {
     body: JSON.stringify({
-      products: data.map((item) => {
-        item.quantity = item.count!;
-        return item;
-      }),
+      products: data.map((item) => ({
+        brand: item.brand,
+        category: item.category,
+        images: item.images,
+        price: item.price,
+        quantity: item.count!,
+        rating: item.rating,
+        title: item.title,
+      }))
     }),
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
-  return result;
+  return result as GetClientSecretResponse;
 };
 
 export const getOrders = async () => {
-  const orders = await httpRequest.get(new URL("orders", getBaseUrl()));
+  const orders = await httpRequest.get(new URL('orders', getBaseUrl()));
 
-  return orders;
+  return orders as Order[];
 };
 
-export const getPaymentStatus = async (sessionId = "") => {
-  const url = new URL("payment-status", getBaseUrl());
+export const getPaymentStatus = async (sessionId = '') => {
+  const url = new URL('payment-status', getBaseUrl());
 
   url.search = new URLSearchParams(`session_id=${sessionId}`).toString();
 
   const status = await httpRequest.get(url);
 
-  return status;
+  return status as { status: string };
 };
