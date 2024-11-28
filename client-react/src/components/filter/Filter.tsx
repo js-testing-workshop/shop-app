@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import './filter-style.css';
-import { FilterConfig } from '../../types/filter.ts';
-import { getFilterConfig } from '../../api/filter.ts';
-import { useAlert } from '../alert/useAlert.ts';
+import { FilterConfig } from '../../types/filter';
+import { getFilterConfig } from '../../api/filter';
+import { useAlert } from '../alert/useAlert';
 import RangeSlider from './components/range-slider';
 import CheckboxFilter from './components/checkbox-filter';
+
+import './filter-style.css';
 
 interface FilterProps {
   onChange: (filterConfig: FilterConfig[]) => void;

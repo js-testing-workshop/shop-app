@@ -1,3 +1,3 @@
-export * from './CartContext.ts';
-export * from './CartProvider.tsx';
-export * from './hook.ts';
+export * from './CartContext';
+export * from './CartProvider';
+export * from './hook';

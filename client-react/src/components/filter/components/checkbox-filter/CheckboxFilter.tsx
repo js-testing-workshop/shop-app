@@ -1,6 +1,7 @@
 import React from 'react';
+import { CheckboxesFilterConfig } from '../../../../types/filter';
+
 import './checkbox-filter-style.css';
-import { CheckboxesFilterConfig } from '../../../../types/filter.ts';
 
 interface CheckboxFilterProps {
   options: CheckboxesFilterConfig['data'];

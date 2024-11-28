@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RoutesList } from '../../Routes.enum.ts';
+import RoutesConfig from '../../RoutesConfig';
 
 const NotFound: React.FC = () => {
 
@@ -8,7 +8,7 @@ const NotFound: React.FC = () => {
     <div className="os-container">
       <main>
         <h1 className="app-page-title">404 Page</h1>
-        <Link to={RoutesList.HOME}>go to home</Link>
+        <Link to={RoutesConfig.home.path}>go to home</Link>
       </main>
     </div>
   );

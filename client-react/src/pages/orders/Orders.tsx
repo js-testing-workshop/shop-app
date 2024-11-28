@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/layout/header';
-import { getOrders } from '../../api/payments.ts';
-import { Order } from '../../types/orders.ts';
-import { Product } from '../../types/product.ts';
-import { formatOrderDate } from './helpers.ts';
+import { getOrders } from '../../api/payments';
+import { Order } from '../../types/orders';
+import { Product } from '../../types/product';
+import { formatOrderDate } from './helpers';
 
 import './orders-style.css';
 
@@ -26,7 +26,6 @@ const Orders: React.FC = () => {
     if (!products.length) {
       return `<td colspan="7" class="text-center">There is no orders</td>`;
     }
-    console.log(products)
     return products
       .map((product, index) => (
         <tr key={index}>

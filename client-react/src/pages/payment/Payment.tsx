@@ -3,22 +3,22 @@ import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js';
 import Header from '../../components/layout/header';
 import { useCart } from '../../providers/CartProvider';
-import { getClientSecret } from '../../api/payments.ts';
+import { getClientSecret } from '../../api/payments';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY as string);
 
 const PaymentPage: React.FC = () => {
-  const { productsCollection } = useCart();
+  const { productsInCart } = useCart();
 
-  const fetchClientSecret = useCallback(() => {
-    return getClientSecret(Object.values(productsCollection))
-      .then((data) => data.clientSecret);
+  const fetchClientSecret = useCallback(async () => {
+    const { clientSecret } = await getClientSecret(Object.values(productsInCart));
+
+    return clientSecret;
   }, []);
 
-  const options = {fetchClientSecret};
+  const options = { fetchClientSecret };
 
   return (
-
     <div className="os-container">
       <Header pageTitle="Payment page"/>
 
@@ -33,6 +33,5 @@ const PaymentPage: React.FC = () => {
     </div>
   );
 };
-
 
 export default PaymentPage;

@@ -1,1 +1,1 @@
-export { default } from './CheckboxFilter.tsx';
+export { default } from './CheckboxFilter';

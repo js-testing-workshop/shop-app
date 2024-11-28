@@ -1,10 +1,30 @@
-import { CheckboxesFilterConfig, FilterConfig } from '../types/filter.ts';
-import { priceFilterConfig, ratingFilterConfig } from '../fixtures/filter.ts';
-import { getBrands, getCategories } from './products.ts';
-import { mapStringsToCheckboxesConfig } from '../components/filter/helpers.ts';
+import { CheckboxesFilterConfig, FilterConfig, RangeFilterConfig } from '../types/filter';
+import { mapStringsToCheckboxesConfig } from '../components/filter/helpers';
+import { getBrands, getCategories } from './products';
+
+const priceFilterConfig: RangeFilterConfig = {
+  type: 'range',
+  title: 'Price',
+  name: 'price',
+  data: {
+    min: 0,
+    max: 85000,
+  },
+};
+
+const ratingFilterConfig: RangeFilterConfig = {
+  type: 'range',
+  title: 'Rating',
+  name: 'rating',
+  data: {
+    min: 0,
+    max: 5,
+    precision: 2,
+  },
+};
 
 export const getFilterConfig = async (): Promise<FilterConfig[]> => {
-  const allCategories = await getCategories();
+  const [allCategories, allBrands] = await Promise.all([getCategories(), getBrands()]);
   const categoryFilterConfig: CheckboxesFilterConfig = {
     type: 'checkboxes',
     title: 'Category',
@@ -12,7 +32,6 @@ export const getFilterConfig = async (): Promise<FilterConfig[]> => {
     data: mapStringsToCheckboxesConfig(allCategories),
   };
 
-  const allBrands = await getBrands();
   const brandFilterConfig: CheckboxesFilterConfig = {
     type: 'checkboxes',
     title: 'Brand',
@@ -20,5 +39,5 @@ export const getFilterConfig = async (): Promise<FilterConfig[]> => {
     data: mapStringsToCheckboxesConfig(allBrands),
   };
 
-  return [priceFilterConfig, categoryFilterConfig, brandFilterConfig, ratingFilterConfig]
-}
+  return [priceFilterConfig, categoryFilterConfig, brandFilterConfig, ratingFilterConfig];
+};

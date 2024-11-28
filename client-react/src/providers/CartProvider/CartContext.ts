@@ -1,9 +1,9 @@
 import { createContext } from 'react';
-import { ProductsCollection } from './types.ts';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/product';
+import { ProductsCollection } from './types';
 
 export interface CartContextProps {
-  productsCollection: ProductsCollection;
+  productsInCart: ProductsCollection;
   productsCount: number;
   totalPrice: number;
   addToCart: (product: Product) => void;
@@ -13,4 +13,4 @@ export interface CartContextProps {
   decreaseProductCounter: (id: string) => void;
 }
 
-export const CartContext = createContext<CartContextProps | undefined>(undefined);
+export const CartContext = createContext<CartContextProps | null>(null);

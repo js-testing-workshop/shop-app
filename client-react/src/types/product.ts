@@ -1,4 +1,4 @@
-import { SelectedFilter } from './filter.ts';
+import { SelectedFilter } from './filter';
 
 export interface Product {
   id: string;

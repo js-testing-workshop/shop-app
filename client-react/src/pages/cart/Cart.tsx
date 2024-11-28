@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './cart-style.css';
 import { useCart } from '../../providers/CartProvider';
 import { useUser } from '../../providers/UserProvider';
 import Header from '../../components/layout/header';
-import { RoutesList } from '../../Routes.enum.ts';
+import RoutesConfig from '../../RoutesConfig';
+
+import './cart-style.css';
 
 const Cart: React.FC = () => {
   const { isAuthorized } = useUser();
   const {
-    productsCollection,
+    productsInCart,
     totalPrice,
     productsCount,
     clearCart,
@@ -28,7 +29,7 @@ const Cart: React.FC = () => {
       <main className="cart-container">
         <section>
           <ul className="cart-list">
-            {Object.values(productsCollection).map((product) => (<li className="item-row" key={product.id}>
+            {Object.values(productsInCart).map((product) => (<li className="item-row" key={product.id}>
               <div className="item-preview">
                 <img src={product.images[0]} alt={product.title}/>
               </div>
@@ -56,7 +57,7 @@ const Cart: React.FC = () => {
             <button className="os-btn-primary clear-cart-btn" onClick={clearCart}>Clear Cart</button>
 
             {isAuthorized && (
-              <Link to={RoutesList.PAYMENT}>
+              <Link to={RoutesConfig.payment.path}>
                 <button className="os-btn-primary" data-cy="order-btn">Order</button>
               </Link>
             )}

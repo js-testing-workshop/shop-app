@@ -1,4 +1,4 @@
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/product';
 
 export const getTotalPrice = (products: Product[]) => {
   let total = 0;

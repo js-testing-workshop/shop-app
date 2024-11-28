@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './header.css';
 import { useCart } from '../../../providers/CartProvider';
-import { RoutesList } from '../../../Routes.enum.ts';
+import RoutesConfig from '../../../RoutesConfig';
+
+import './header.css';
 
 interface HeaderProps {
   pageTitle: string;
@@ -17,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, withCartButton }) => {
       <h2 className="app-page-title">{pageTitle}</h2>
 
       {withCartButton && (
-        <Link to={RoutesList.CART}>
+        <Link to={RoutesConfig.cart.path}>
           <button
             className="cart-btn os-btn-primary"
             data-element="cartBtn"

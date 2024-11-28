@@ -1,5 +1,8 @@
 import React from 'react';
+
 import './pagination-style.css';
+
+const MIN_PAGES_COUNT_FOR_PAGINATION = 2;
 
 interface PaginationProps {
   currentPage: number;
@@ -8,8 +11,8 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-  if (totalPages < 2) {
-    return null;
+  if (totalPages < MIN_PAGES_COUNT_FOR_PAGINATION) {
+    return;
   }
 
   const handlePrevPageClick = () => {

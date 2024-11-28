@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/layout/header';
 import { Link, useSearchParams } from 'react-router-dom';
+import Header from '../../components/layout/header';
 import { useCart } from '../../providers/CartProvider';
-import { getPaymentStatus } from '../../api/payments.ts';
-
-import { RoutesList } from '../../Routes.enum.ts';
+import { getPaymentStatus } from '../../api/payments';
+import RoutesConfig from '../../RoutesConfig';
 
 const PaymentStatus: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -64,7 +63,7 @@ const PaymentStatus: React.FC = () => {
               <div className="text-center">
                 <h1>Thank You !</h1>
                 <p>Payment successfully passed</p>
-                <Link to={RoutesList.HOME}>
+                <Link to={RoutesConfig.home.path}>
                   <button className="btn btn-primary">Back Home</button>
                 </Link>
               </div>
@@ -75,6 +74,5 @@ const PaymentStatus: React.FC = () => {
     </div>
   );
 };
-
 
 export default PaymentStatus;

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { RangeFilterConfig } from '../../../../types/filter.ts';
+import { RangeFilterConfig } from '../../../../types/filter';
 
 import './range-slider-style.css';
 

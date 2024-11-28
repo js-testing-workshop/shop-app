@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '../../modal/Modal.tsx';
-import LoginForm from '../../login-form/LoginForm.tsx';
 import { useUser } from '../../../providers/UserProvider';
-import { RoutesList } from '../../../Routes.enum.ts';
+import RoutesConfig from '../../../RoutesConfig';
+import Modal from '../../modal/Modal';
+import LoginForm from '../../login-form/LoginForm';
 
 const NavigationBar: React.FC = () => {
   const { logout, isAuthorized } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const links = [
-    { name: 'Home', path: RoutesList.HOME, show: true },
+    { name: 'Home', path: RoutesConfig.home.path, show: true },
     {
       name: 'Create product',
-      path: RoutesList.CREATE_PRODUCT,
+      path: RoutesConfig.createProduct.path,
       show: isAuthorized,
     },
-    { name: 'Orders', path: RoutesList.ORDERS, show: isAuthorized },
+    { name: 'Orders', path: RoutesConfig.orders.path, show: isAuthorized },
   ];
 
   const closeModal = () => setIsModalOpen(false);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
 import { useUser } from '../../providers/UserProvider';
+
 import './login-form.css';
 
 interface LoginFormProps {
@@ -50,16 +51,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
       password: passwordRef.current?.value ?? '',
     };
 
-    void login(formData, {
-      onSuccess: onSuccessCallback,
-      onFailure: () => {
+    void login(formData,
+      onSuccessCallback,
+      () => {
         if (formRef.current) {
           formRef.current.classList.remove('was-validated');
         }
         setIsInvalid(true);
         onErrorCallback?.();
       }
-    }).finally(() => setIsLoading(false));
+    ).finally(() => setIsLoading(false));
   };
 
   return (

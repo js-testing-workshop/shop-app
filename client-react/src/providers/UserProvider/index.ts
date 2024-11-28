@@ -1,3 +1,3 @@
-export * from './UserContext.ts';
-export * from './UserProvider.tsx';
-export * from './hook.ts';
+export * from './UserContext';
+export * from './UserProvider';
+export * from './hook';

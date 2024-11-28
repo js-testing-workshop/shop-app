@@ -1,6 +1,7 @@
 import React from 'react';
+import { AlertType } from '../../types/alert';
+
 import './customAlert.css';
-import { AlertType } from '../../types/alert.ts';
 
 interface CustomAlertProps {
   type: AlertType;

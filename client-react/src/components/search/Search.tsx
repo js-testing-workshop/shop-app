@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useDebounce from './useDebounce';
+
 import './search-style.css';
 
 interface SearchProps {

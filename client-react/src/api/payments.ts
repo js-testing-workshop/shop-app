@@ -1,6 +1,6 @@
-import { httpRequest } from '../request/index.ts';
-import { Product } from '../types/product.ts';
-import { Order } from '../types/orders.ts';
+import { httpRequest } from '../request';
+import { Product } from '../types/product';
+import { Order } from '../types/orders';
 
 const getBaseUrl = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;

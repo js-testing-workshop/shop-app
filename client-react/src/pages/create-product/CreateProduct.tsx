@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/layout/header';
 import { useFormik } from 'formik';
-import { createProduct, getBrands, getCategories } from '../../api/products.ts';
-import { useAlert } from '../../components/alert/useAlert.ts';
+import Header from '../../components/layout/header';
+import { useAlert } from '../../components/alert/useAlert';
+import { createProduct, getBrands, getCategories } from '../../api/products';
 
 import './create-product-style.css';
 
@@ -30,7 +30,7 @@ const CreateProduct: React.FC = () => {
       brand: '',
       rating: 3,
       category: '',
-      image: undefined,
+      image: null,
     },
     onSubmit: async (values, formikHelpers) => {
       try {
@@ -38,7 +38,7 @@ const CreateProduct: React.FC = () => {
 
         showAlert('success', 'Product was successfully created.');
         formikHelpers.resetForm();
-        void formikHelpers.setFieldValue('iamge', undefined);
+        void formikHelpers.setFieldValue('image', null);
       } catch {
         showAlert('danger', 'Error during product creation.');
         setError(true);

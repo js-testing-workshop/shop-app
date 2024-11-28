@@ -1,6 +1,6 @@
-import { httpRequest } from '../request/index.ts';
-import { uploadToImgur } from './imgur-img-upload.ts';
-import { Product, ProductsQueryParams } from '../types/product.ts';
+import { httpRequest } from '../request';
+import { Product, ProductsQueryParams } from '../types/product';
+import { uploadToImgur } from './imgur-img-upload';
 
 const getBaseUrl = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
@@ -30,9 +30,9 @@ export const getProducts = async (params: ProductsQueryParams): Promise<{ produc
         urlSearchParams[`${filter.name}_lte`] = filter.value.to.toString();
       }
       if (filter.type === 'checkboxes') {
-        urlSearchParams[filter.name] = filter.value.join('%2C');
+        urlSearchParams[filter.name] = encodeURIComponent(filter.value.join(','));
       }
-    })
+    });
   }
 
   url.search = (new URLSearchParams(urlSearchParams)).toString();

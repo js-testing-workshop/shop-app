@@ -1,4 +1,4 @@
-import { CheckboxesFilterConfig, FilterConfig, SelectedFilter } from '../../types/filter.ts';
+import { CheckboxesFilterConfig, FilterConfig, SelectedFilter } from '../../types/filter';
 
 export const mapStringsToCheckboxesConfig = (arr: string[]): CheckboxesFilterConfig['data'] => arr.map((item) => {
   return {

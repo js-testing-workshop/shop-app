@@ -1,19 +1,21 @@
 import React from 'react';
-import './card-style.css';
 import { Product } from '../../types/product';
+import { useCart } from '../../providers/CartProvider';
+
+import './card-style.css';
 
 interface CardProps {
   data: Product;
-  onAddToCart: (id: string) => void;
-  onRemoveFromCart: (id: string) => void;
 }
 
-const Card: React.FC<CardProps> = ({ data, onAddToCart, onRemoveFromCart }) => {
+const Card: React.FC<CardProps> = ({ data }) => {
+  const { addToCart, removeFromCart } = useCart();
+
   const handleClick = () => {
     if (data.count) {
-      onRemoveFromCart(data.id);
+      removeFromCart(data.id);
     } else {
-      onAddToCart(data.id);
+      addToCart(data);
     }
   };
 

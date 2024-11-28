@@ -6,5 +6,6 @@ export const useAlert = (): AlertContextProps => {
   if (!context) {
     throw new Error('useAlert must be used within an AlertProvider');
   }
+
   return context;
 };
