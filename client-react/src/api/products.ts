@@ -30,7 +30,7 @@ export const getProducts = async (params: ProductsQueryParams): Promise<{ produc
         urlSearchParams[`${filter.name}_lte`] = filter.value.to.toString();
       }
       if (filter.type === 'checkboxes') {
-        urlSearchParams[filter.name] = encodeURIComponent(filter.value.join(','));
+        urlSearchParams[filter.name] = filter.value.join(',');
       }
     });
   }
