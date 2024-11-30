@@ -51,15 +51,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
       password: passwordRef.current?.value ?? '',
     };
 
-    void login(formData,
-      onSuccessCallback,
-      () => {
-        if (formRef.current) {
-          formRef.current.classList.remove('was-validated');
+    void login({
+        data: formData,
+        onSuccess: onSuccessCallback,
+        onFailure: () => {
+          if (formRef.current) {
+            formRef.current.classList.remove('was-validated');
+          }
+          setIsInvalid(true);
+          onErrorCallback?.();
         }
-        setIsInvalid(true);
-        onErrorCallback?.();
-      }
+      },
     ).finally(() => setIsLoading(false));
   };
 

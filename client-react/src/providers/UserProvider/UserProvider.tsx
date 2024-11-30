@@ -16,7 +16,7 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
     storage.set(IS_AUTHORIZED_KEY, isAuthorized);
   }, [isAuthorized]);
 
-  const login: UserContextProps['login'] = useCallback(async (data, onSuccess, onFailure) => {
+  const login: UserContextProps['login'] = useCallback(async ({ data, onSuccess, onFailure }) => {
     try {
       await signin({ body: JSON.stringify(data) });
       showAlert('success', 'Login success');
