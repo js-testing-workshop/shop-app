@@ -1,18 +1,38 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getProducts } from '../../api/products';
+import { getProducts, Product, ProductsQueryParams } from '../../api/products';
+import { FilterConfig, SelectedFilter } from '../../api/filter';
 import { useCart } from '../../providers/CartProvider';
 import { ProductsCollection } from '../../providers/CartProvider/types';
 import Pagination from '../../components/pagination';
 import Search from '../../components/search';
 import Header from '../../components/layout/header';
-import { extractSelectedFilters } from '../../components/filter/helpers';
 import CardsList from '../../components/cards-list/CardList';
 import Filter from '../../components/filter';
-import { Product, ProductsQueryParams } from '../../types/product';
-import { FilterConfig } from '../../types/filter';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
 
 import './home.css';
+
+const extractSelectedFilters = (filters: FilterConfig[]): SelectedFilter[] => {
+  return filters.map((filter) => {
+    if (filter.type === 'checkboxes') {
+      return {
+        name: filter.name,
+        type: filter.type,
+        value: filter.data.filter((option) => option.checked).map((option) => option.name),
+      };
+    }
+
+    if (filter.type === 'range') {
+      return {
+        name: filter.name,
+        type: filter.type,
+        value: filter.data.value!,
+      };
+    }
+
+    throw new Error('Unknown filter');
+  });
+};
 
 const PRODUCTS_PER_PAGE = 9;
 
@@ -64,7 +84,7 @@ const Home: React.FC = () => {
       <Header pageTitle="Home Page" withCartButton/>
 
       <main className="os-products">
-        <div><Filter onChange={handleFiltersChange} /></div>
+        <div><Filter onChange={handleFiltersChange}/></div>
 
         <section>
           <div>
@@ -72,7 +92,7 @@ const Home: React.FC = () => {
           </div>
 
           <div data-element="cardsList" data-cy="products-list">
-            <CardsList products={products} />
+            <CardsList products={products}/>
           </div>
 
           <footer className="os-products-footer">

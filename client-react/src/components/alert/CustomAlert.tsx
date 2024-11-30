@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertType } from '../../types/alert';
+import { AlertType } from './alertContext';
 
 import './customAlert.css';
 

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/layout/header';
-import { getOrders } from '../../api/payments';
-import { Order } from '../../types/orders';
-import { Product } from '../../types/product';
+import { getOrders, Order } from '../../api/payments';
+import { Product } from '../../api/products';
 import { formatOrderDate } from './helpers';
 
 import './orders-style.css';

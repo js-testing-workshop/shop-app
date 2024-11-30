@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../../types/product';
+import { Product } from '../../api/products';
 import Card from '../card/Card';
 
 import './card-list-style.css';

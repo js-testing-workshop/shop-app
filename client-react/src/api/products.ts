@@ -1,12 +1,32 @@
 import { httpRequest } from '../request';
-import { Product, ProductsQueryParams } from '../types/product';
 import { uploadToImgur } from './imgur-img-upload';
+import { SelectedFilter } from './filter';
 
 const getBaseUrl = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
   return new URL('shop/', BACKEND_URL);
 };
+
+export interface Product {
+  id: string;
+  images: string[];
+  rating: number;
+  price: number;
+  title: string;
+  brand: string;
+  category: string;
+  inStore?: boolean;
+  quantity?: number;
+  count?: number;
+}
+
+export interface ProductsQueryParams {
+  page: number;
+  limit: number;
+  search: string;
+  filters: SelectedFilter[];
+}
 
 export const getProducts = async (params: ProductsQueryParams): Promise<{ products: Product[], total: number }> => {
   const url = new URL('products', getBaseUrl());

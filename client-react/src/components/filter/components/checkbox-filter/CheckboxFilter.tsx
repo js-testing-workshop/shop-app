@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckboxesFilterConfig } from '../../../../types/filter';
+import { CheckboxesFilterConfig } from '../../../../api/filter';
 
 import './checkbox-filter-style.css';
 

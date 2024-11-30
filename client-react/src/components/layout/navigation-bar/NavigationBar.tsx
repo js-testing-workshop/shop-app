@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../../providers/UserProvider';
 import RoutesConfig from '../../../RoutesConfig';
@@ -81,11 +82,13 @@ const NavigationBar: React.FC = () => {
           </ul>
         </div>
       </div>
-      <Modal
-        component={<LoginForm onSuccessCallback={closeModal}/>}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
+      {isModalOpen && createPortal(
+        <Modal
+          component={<LoginForm onSuccessCallback={closeModal}/>}
+          onClose={closeModal}
+        />,
+        document.body
+      )}
     </nav>
   );
 };

@@ -1,4 +1,5 @@
-import { Product } from '../../types/product';
+import { Product } from '../../api/products';
+
 
 export const getTotalPrice = (products: Product[]) => {
   let total = 0;

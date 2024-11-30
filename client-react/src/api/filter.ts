@@ -1,6 +1,43 @@
-import { CheckboxesFilterConfig, FilterConfig, RangeFilterConfig } from '../types/filter';
-import { mapStringsToCheckboxesConfig } from '../components/filter/helpers';
 import { getBrands, getCategories } from './products';
+
+interface BaseFilterConfig {
+  title: string;
+  name: string;
+}
+
+export interface RangeFilterConfig extends BaseFilterConfig {
+  type: 'range';
+  data: {
+    min: number;
+    max: number;
+    value?: {
+      from: number;
+      to: number;
+    }
+    precision?: number;
+  };
+}
+
+export interface CheckboxesFilterConfig extends BaseFilterConfig {
+  type: 'checkboxes';
+  data: { name: string, title: string, checked?: boolean }[];
+}
+
+export type FilterConfig = RangeFilterConfig | CheckboxesFilterConfig;
+
+interface SelectedRangeFilter {
+  name: string;
+  type: 'range';
+  value: { from: number; to: number };
+}
+
+interface SelectedCheckboxesFilter {
+  name: string;
+  type: 'checkboxes';
+  value: string[];
+}
+
+export type SelectedFilter = SelectedRangeFilter | SelectedCheckboxesFilter;
 
 const priceFilterConfig: RangeFilterConfig = {
   type: 'range',
@@ -23,21 +60,24 @@ const ratingFilterConfig: RangeFilterConfig = {
   },
 };
 
+
+const prepareCheckboxesConfig = (arr: string[], title: string, name: string): CheckboxesFilterConfig => ({
+  type: 'checkboxes',
+  title,
+  name,
+  data: arr.map((item) => (
+    {
+      name: item.toLowerCase().split(' ').join('_'),
+      title: item,
+    }
+  )),
+});
+
 export const getFilterConfig = async (): Promise<FilterConfig[]> => {
   const [allCategories, allBrands] = await Promise.all([getCategories(), getBrands()]);
-  const categoryFilterConfig: CheckboxesFilterConfig = {
-    type: 'checkboxes',
-    title: 'Category',
-    name: 'category',
-    data: mapStringsToCheckboxesConfig(allCategories),
-  };
 
-  const brandFilterConfig: CheckboxesFilterConfig = {
-    type: 'checkboxes',
-    title: 'Brand',
-    name: 'brand',
-    data: mapStringsToCheckboxesConfig(allBrands),
-  };
+  const categoryFilterConfig = prepareCheckboxesConfig(allCategories, 'Category', 'category');
+  const brandFilterConfig = prepareCheckboxesConfig(allBrands, 'Brand', 'brand');
 
   return [priceFilterConfig, categoryFilterConfig, brandFilterConfig, ratingFilterConfig];
 };

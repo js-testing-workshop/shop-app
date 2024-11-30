@@ -1,6 +1,5 @@
 import { httpRequest } from '../request';
-import { Product } from '../types/product';
-import { Order } from '../types/orders';
+import { Product } from './products';
 
 const getBaseUrl = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
@@ -32,6 +31,12 @@ export const getClientSecret = async (data: Product[] = []): Promise<GetClientSe
 
   return result as GetClientSecretResponse;
 };
+
+export interface Order {
+  status: string;
+  created: number;
+  products: Product[];
+}
 
 export const getOrders = async () => {
   const orders = await httpRequest.get(new URL('orders', getBaseUrl()));

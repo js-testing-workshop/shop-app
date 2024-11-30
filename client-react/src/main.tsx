@@ -1,7 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AlertProvider } from './components/alert/alertContext';
-import AlertComponent from './components/alert/AlertComponent';
 import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +10,6 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AlertProvider>
       <App/>
-      <AlertComponent/>
     </AlertProvider>
   </StrictMode>,
 );
