@@ -1,21 +1,31 @@
-import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/home/Home';
-import NavigationBar from './components/navigation-bar/NavigationBar';
+import { CartProvider } from './providers/CartProvider';
+import { UserProvider } from './providers/UserProvider';
+import NavigationBar from './components/layout/navigation-bar/NavigationBar';
+import NotFoundPage from './pages/not-found/NotFound';
+import RoutesConfig from './RoutesConfig';
+
+import './App.css';
 
 const App = () => {
-
   return (
-    <Router>
-      <div className="app-main">
-        <NavigationBar />
-        <div id="content" className="content">
-          <Routes>
-            <Route path="/home" element={<HomePage />} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <UserProvider>
+      <CartProvider>
+        <Router>
+          <div className="app-main">
+            <NavigationBar/>
+            <div id="content" className="content">
+              <Routes>
+                {Object.values(RoutesConfig).map((route, index) => (
+                  <Route key={index} path={route.path} element={route.component}/>
+                ))}
+                <Route path="*" element={<NotFoundPage/>}/>
+              </Routes>
+            </div>
+          </div>
+        </Router>
+      </CartProvider>
+    </UserProvider>
   );
 };
 

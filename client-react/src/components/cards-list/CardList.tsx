@@ -1,26 +1,20 @@
 import React from 'react';
+import { Product } from '../../api/products';
 import Card from '../card/Card';
+
 import './card-list-style.css';
-import { Product } from '../../models/Product';
 
 interface CardsListProps {
   products: Product[];
-  onAddToCart: (id: string) => void;
-  onRemoveFromCart: (id: string) => void;
 }
 
-const CardsList: React.FC<CardsListProps> = ({ products, onAddToCart, onRemoveFromCart }) => {
+const CardsList: React.FC<CardsListProps> = ({ products }) => {
   return (
     <div>
-      <div className="os-products-list" data-element="body">
+      <div className="os-products-list">
         {products.length ? (
           products.map((item) => (
-            <Card
-              key={item.id}
-              data={item}
-              onAddToCart={onAddToCart}
-              onRemoveFromCart={onRemoveFromCart}
-            />
+            <Card key={item.id} data={item} />
           ))
         ) : (
           <div>No products found</div>

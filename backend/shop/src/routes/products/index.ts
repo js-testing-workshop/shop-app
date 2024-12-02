@@ -1,8 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import productsRepo from "./repo";
-import { requireAuth } from "common";
-import { validateRequest } from "common";
+import { requireAuth, validateRequest } from "common";
 
 const router = express.Router();
 

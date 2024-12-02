@@ -2,13 +2,6 @@
   width: 100%;
 }
 
-.os-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 10px;
-}
-
 .cart-btn {
   outline: none;
   border: none;
@@ -21,10 +14,6 @@
 
 .cart-btn .bi {
   font-size: 1.2rem;
-}
-
-.cart-count.hidden {
-  display: none;
 }
 
 .os-products {

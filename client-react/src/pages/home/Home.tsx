@@ -1,104 +1,96 @@
 import React, { useState, useEffect, useCallback } from 'react';
-// import Pagination from '../../components/pagination/index.js';
-// import SideBar from '../../components/side-bar/index.js';
-// import Search from '../../components/search/index.js';
-import CardsList from '../../components/cards-list/CardList.tsx';
-// import { prepareFilters } from './prepare-filters.js';
-import productStore from '../../storage/product-store.ts';
-import { getProducts } from '../../api/products.ts';
-import { Link } from 'react-router-dom';
+import { getProducts, Product, ProductsQueryParams } from '../../api/products';
+import { FilterConfig, SelectedFilter } from '../../api/filter';
+import Pagination from '../../components/pagination';
+import Search from '../../components/search';
+import Header from '../../components/layout/header';
+import CardsList from '../../components/cards-list/CardList';
+import Filter from '../../components/filter';
+
 import './home.css';
-import Search from '../../components/search/Search.tsx';
-import { Product } from '../../models/Product.ts';
+
+const extractSelectedFilters = (filters: FilterConfig[]): SelectedFilter[] => {
+  return filters.map((filter) => {
+    if (filter.type === 'checkboxes') {
+      return {
+        name: filter.name,
+        type: filter.type,
+        value: filter.data.filter((option) => option.checked).map((option) => option.name),
+      };
+    }
+
+    if (filter.type === 'range') {
+      return {
+        name: filter.name,
+        type: filter.type,
+        value: filter.data.value!,
+      };
+    }
+
+    throw new Error('Unknown filter');
+  });
+};
+
+const PRODUCTS_PER_PAGE = 9;
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filters] = useState(new URLSearchParams());
-  const pageLimit = 9;
+  const [totalProductsCount, setTotalProductsCount] = useState<number>(0);
+  const [queryParams, setQueryParams] = useState<ProductsQueryParams>({
+    page: 1,
+    limit: PRODUCTS_PER_PAGE,
+    search: '',
+    filters: [],
+  });
 
   useEffect(() => {
-    filters.set('_page', '1');
-    filters.set('_limit', pageLimit.toString());
-  }, [filters]);
+    void (async () => {
+      const { products, total } = await getProducts(queryParams);
 
-  const handleSearch = useCallback(async (title: string) => {
-    filters.set("_page", "1");
-    filters.set("q", title);
-    const data = await getProducts(filters);
-    setProducts(data.products);
+      setProducts(products);
+      setTotalProductsCount(total);
+    })();
+  }, [queryParams]);
 
-    // components.cardsList.update(products);
-    // Re-render the components that depend on the product store
-    // renderComponents();
-  }, [filters]);
+  const handleSearch = useCallback((search: string) => {
+    setQueryParams((prev) => ({ ...prev, page: 1, search }));
+  }, []);
 
-  useEffect(() => {
-    void handleSearch('');
-  }, [handleSearch]);
-  
-  const handleAddToCart = (id: string) => {
-    // Implement add to cart functionality here
-    console.log('Added to cart:', id);
-  };
+  const handlePageChange = useCallback((page: number) => {
+    setQueryParams((prev) => ({ ...prev, page }));
+  }, []);
 
-  const handleRemoveFromCart = (id: string) => {
-    // Implement remove from cart functionality here
-    console.log('Removed from cart:', id);
-  };
+  const handleFiltersChange = useCallback((filters: FilterConfig[]) => {
+    setQueryParams((prev) => ({ ...prev, filters: extractSelectedFilters(filters) }));
+  }, []);
 
-  const template = () => {
-    const totalProducts = productStore.getProductsCount();
-    // const totalProducts = 6;
-    const cartBtnClass = totalProducts > 0 ? '' : 'hidden';
+  return (
+    <div className="os-container">
+      <Header pageTitle="Home Page" withCartButton/>
 
-    return (
-      <div className="os-container">
-        <header className="os-header">
-          <h2 className="app-page-title">Home Page</h2>
-          <Link to="/cart">
-            <button
-              className="cart-btn os-btn-primary"
-              data-element="cartBtn"
-              data-cy="cart-btn"
-            >
-              <i className="bi bi-cart"></i>
-              Cart{' '}
-              <span
-                className={`${cartBtnClass} cart-count`}
-                data-element="cartCounter"
-              >
-                {totalProducts}
-              </span>
-            </button>
-          </Link>
-        </header>
+      <main className="os-products">
+        <div><Filter onChange={handleFiltersChange}/></div>
 
-        <main className="os-products">
-          <div data-element="sideBar">{/* SideBar */}</div>
+        <section>
+          <div>
+            <Search onSearch={handleSearch}/>
+          </div>
 
-          <section>
-            <div data-element="search">
-              <Search onSearch={handleSearch} />
-            </div>
+          <div data-element="cardsList" data-cy="products-list">
+            <CardsList products={products}/>
+          </div>
 
-            <div data-element="cardsList" data-cy="products-list">
-            <CardsList
-                products={products}
-                onAddToCart={handleAddToCart}
-                onRemoveFromCart={handleRemoveFromCart}
-              />
-            </div>
-
-            <footer data-element="pagination" className="os-products-footer">
-              {/* Pagination */}
-            </footer>
-          </section>
-        </main>
-      </div>
-    );
-  };
-
-  return template();
+          <footer className="os-products-footer">
+            <Pagination
+              totalPages={Math.ceil(totalProductsCount / queryParams.limit)}
+              currentPage={queryParams.page}
+              onPageChange={handlePageChange}
+            />
+          </footer>
+        </section>
+      </main>
+    </div>
+  );
 };
 
 export default Home;

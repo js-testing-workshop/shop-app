@@ -1,29 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Product } from '../../api/products';
+import { useCart } from '../../providers/CartProvider';
+
 import './card-style.css';
-import { Product } from '../../models/Product';
 
 interface CardProps {
   data: Product;
-  onAddToCart: (id: string) => void;
-  onRemoveFromCart: (id: string) => void;
 }
 
-const Card: React.FC<CardProps> = ({ data, onAddToCart, onRemoveFromCart }) => {
-  const [inStore, setInStore] = useState(data.inStore);
+const Card: React.FC<CardProps> = ({ data }) => {
+  const { addToCart, removeFromCart, productsInCart } = useCart();
+  const isAddedToCart = !!productsInCart[data.id]?.count;
 
   const handleClick = () => {
-    if (inStore) {
-      onRemoveFromCart(data.id);
-      setInStore(false);
+    if (isAddedToCart) {
+      removeFromCart(data.id);
     } else {
-      onAddToCart(data.id);
-      setInStore(true);
+      addToCart(data);
     }
   };
 
   const footer = () => {
-    const labelValue = inStore ? 'Remove from cart' : 'Add to cart';
-    const classValue = inStore ? 'active' : '';
+    const labelValue = isAddedToCart ? 'Remove from cart' : 'Add to cart';
+    const classValue = isAddedToCart ? 'active' : '';
 
     return (
       <button

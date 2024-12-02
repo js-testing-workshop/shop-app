@@ -1,0 +1,48 @@
+.os-filters-panel-content {
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.os-filters-panel-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.os-filters-panel {
+  margin: 0;
+  padding: 0;
+}
+
+.os-filters-panel-item .os-form-checkbox {
+  margin-bottom: 0;
+}
+
+.clear-filters {
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.os-form-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 18px
+}
+
+.os-form-group {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.os-form-group.divider {
+  border-bottom: 1px solid #d6d6d6;
+}

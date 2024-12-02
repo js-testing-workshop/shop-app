@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import useDebounce from './useDebounce';
+
 import './search-style.css';
 
 interface SearchProps {
-  onSearch: (title: string) => unknown;
+  onSearch: (title: string) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
-
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   useEffect(() => {

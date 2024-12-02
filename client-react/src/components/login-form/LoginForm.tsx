@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { signin } from '../../api/auth';
-import './login-form.css';
-import userStore from '../../storage/user';
-import { useAlert } from '../alert/useAlert';
+import React, { useState, useEffect, useRef, FormEvent } from 'react';
+import { useUser } from '../../providers/UserProvider';
 
+import './login-form.css';
 
 interface LoginFormProps {
   onSuccessCallback?: () => void;
@@ -11,10 +9,10 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
-  onSuccessCallback = () => {return;},
-  onErrorCallback = () => {return;},
+  onSuccessCallback,
+  onErrorCallback,
 }) => {
-  const { showAlert } = useAlert();
+  const { login } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -38,37 +36,33 @@ const LoginForm: React.FC<LoginFormProps> = ({
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  
+
     if (!formRef.current?.checkValidity()) {
       showValidationErrors();
       return;
     }
-  
+
+    setIsLoading(true);
+
     const formData = {
       email: emailRef.current?.value ?? '',
       password: passwordRef.current?.value ?? '',
     };
-  
-    setIsLoading(true);
-    signin({ body: JSON.stringify(formData) })
-      .then(() => {
-        showAlert('success', 'Login success');
-        userStore.login();
-        onSuccessCallback();
-      })
-      .catch(() => {
-        showAlert('danger', 'Login error');
-        if (formRef.current) {
-          formRef.current.classList.remove('was-validated');
+
+    void login({
+        data: formData,
+        onSuccess: onSuccessCallback,
+        onFailure: () => {
+          if (formRef.current) {
+            formRef.current.classList.remove('was-validated');
+          }
+          setIsInvalid(true);
+          onErrorCallback?.();
         }
-        setIsInvalid(true);
-        onErrorCallback();
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      },
+    ).finally(() => setIsLoading(false));
   };
 
   return (
