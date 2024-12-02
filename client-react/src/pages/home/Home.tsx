@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getProducts, Product, ProductsQueryParams } from '../../api/products';
 import { FilterConfig, SelectedFilter } from '../../api/filter';
-import { useCart } from '../../providers/CartProvider';
-import { ProductsCollection } from '../../providers/CartProvider/types';
 import Pagination from '../../components/pagination';
 import Search from '../../components/search';
 import Header from '../../components/layout/header';
 import CardsList from '../../components/cards-list/CardList';
 import Filter from '../../components/filter';
-import { useUpdateEffect } from '../../hooks/use-update-effect';
 
 import './home.css';
 
@@ -37,7 +34,6 @@ const extractSelectedFilters = (filters: FilterConfig[]): SelectedFilter[] => {
 const PRODUCTS_PER_PAGE = 9;
 
 const Home: React.FC = () => {
-  const { productsInCart } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [totalProductsCount, setTotalProductsCount] = useState<number>(0);
   const [queryParams, setQueryParams] = useState<ProductsQueryParams>({
@@ -51,21 +47,10 @@ const Home: React.FC = () => {
     void (async () => {
       const { products, total } = await getProducts(queryParams);
 
-      setProducts(syncProductsWithStorage(products, productsInCart));
+      setProducts(products);
       setTotalProductsCount(total);
     })();
   }, [queryParams]);
-
-  useUpdateEffect(() => {
-    setProducts((prev) => syncProductsWithStorage(prev, productsInCart));
-  }, [productsInCart]);
-
-  const syncProductsWithStorage = useCallback((productsToSync: Product[], productsInCart: ProductsCollection) => {
-    return productsToSync.map((product: Product) => ({
-      ...product,
-      count: productsInCart[product.id]?.count ?? 0
-    }));
-  }, []);
 
   const handleSearch = useCallback((search: string) => {
     setQueryParams((prev) => ({ ...prev, page: 1, search }));

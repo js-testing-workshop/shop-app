@@ -9,10 +9,11 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  const { addToCart, removeFromCart } = useCart();
+  const { addToCart, removeFromCart, productsInCart } = useCart();
+  const isAddedToCart = !!productsInCart[data.id]?.count;
 
   const handleClick = () => {
-    if (data.count) {
+    if (isAddedToCart) {
       removeFromCart(data.id);
     } else {
       addToCart(data);
@@ -20,8 +21,8 @@ const Card: React.FC<CardProps> = ({ data }) => {
   };
 
   const footer = () => {
-    const labelValue = data.count ? 'Remove from cart' : 'Add to cart';
-    const classValue = data.count ? 'active' : '';
+    const labelValue = isAddedToCart ? 'Remove from cart' : 'Add to cart';
+    const classValue = isAddedToCart ? 'active' : '';
 
     return (
       <button
