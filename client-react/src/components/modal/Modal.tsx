@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ component, onClose }) => {
   }, []);
 
   return (
-    <div className="app-modal" data-cy="app-modal">
+    <div className="app-modal" data-cy="app-modal" role="dialog">
       <div className="modal__content" data-element="modalContainer">
         <div data-element="content">{component}</div>
       </div>

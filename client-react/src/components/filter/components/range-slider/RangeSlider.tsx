@@ -155,12 +155,16 @@ const RangeSlider: React.FC<RangeSliderProps> = ({ min, max, precision = 0, form
           style={{ left: leftPosition + '%' }}
           onPointerDown={handleLeftThumbPointerDown}
           onPointerUp={handleLeftThumbPointerUp}
+          role="slider"
+          aria-label="left"
         ></span>
         <span
           className={`range-slider__thumb-right ${isRightThumbActive ? 'range-slider_dragging' : ''}`}
           style={{ right: rightPosition + '%' }}
           onPointerDown={handleRightThumbPointerDown}
           onPointerUp={handleRightThumbPointerUp}
+          role="slider"
+          aria-label="right"
         ></span>
       </div>
       <span>{formatValue(to)}</span>

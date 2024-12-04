@@ -32,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
       <ul className="page-list" data-element="pagination">
         {currentPage > 1 && (
           <li>
-            <button className="page-link previous" onClick={handlePrevPageClick}>
+            <button className="page-link previous" aria-label="previous page" onClick={handlePrevPageClick}>
               <i className="bi bi-chevron-left"/>
             </button>
           </li>
@@ -46,7 +46,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
         {currentPage !== totalPages && (
           <li>
-            <button className="page-link next" onClick={handleNextPageClick}>
+            <button className="page-link next" aria-label="next page" onClick={handleNextPageClick}>
               <i className="bi bi-chevron-right"></i>
             </button>
           </li>
